@@ -17,24 +17,19 @@ for (var row = 0; row < height; row++) {
   }
 }
 
-
 function newPiece() {
   var p = pieces[parseInt(Math.random() * pieces.length, 10)]
   return new Piece(p[0], p[1])
 }
-
 
 function drawSquare( x, y ) {
   ctx.fillRect( x * tilesz, y * tilesz, tilesz, tilesz )
   ss = ctx.strokeStyle
   ctx.strokeStyle = "#555"
   ctx.strokeRect( x * tilesz, y * tilesz, tilesz, tilesz )
-  //WTF? Blecow is code for little squares. I pushed them off the board... are they relevant?
   ctx.strokeStyle = "#999"
-  // ctx.strokeRect( x * tilesz + 3*tilesz/8, y * 3*tilesz/8, tilesz/4, tilesz/4 )
   ctx.strokeStyle = ss
 }
-
 
 function Piece(patterns, color) {
   this.pattern = patterns[0]
@@ -61,7 +56,6 @@ Piece.prototype.rotate = function() {
   }
 }
 
-
 var WALL = 1
 var BLOCK = 2
 Piece.prototype._collides = function(dx, dy, pat) {
@@ -86,7 +80,6 @@ Piece.prototype._collides = function(dx, dy, pat) {
   return 0
 }
 
-
 Piece.prototype.down = function() {
   if (this._collides(0, 1, this.pattern)) {
     this.lock()
@@ -97,7 +90,6 @@ Piece.prototype.down = function() {
     this.draw()
   }
 }
-
 
 Piece.prototype.moveRight = function() {
   if(!this._collides(1, 0, this.pattern)) {
@@ -175,16 +167,13 @@ Piece.prototype._fill = function(color) {
   ctx.fillStyle = fs
 }
 
-
 Piece.prototype.undraw = function(ctx) {
   this._fill(clear)
 }
 
-
 Piece.prototype.draw = function(ctx) {
   this._fill(this.color)
 }
-
 
 var pieces = [
   [I, "cyan"],
@@ -198,7 +187,6 @@ var pieces = [
 
 
 var piece = null
-
 
 var dropStart = Date.now()
 var downI = {}
@@ -263,11 +251,9 @@ function main() {
   }
 }
 
-
 function newGame() {
   location.reload()
 }
-
 
 piece = newPiece()
 drawBoard()
