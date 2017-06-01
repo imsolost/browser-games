@@ -8,7 +8,6 @@ var tilesz = 30
 canvas.width = width * tilesz
 canvas.height = height * tilesz
 
-
 var board = []
 for (var row = 0; row < height; row++) {
   board[row] = []
@@ -39,7 +38,6 @@ function Piece(patterns, color) {
   this.x = width/2-parseInt(Math.ceil(this.pattern.length/2), 10)
   this.y = -2
 }
-
 
 Piece.prototype.rotate = function() {
   var nudge = 0
@@ -108,7 +106,6 @@ Piece.prototype.moveLeft = function() {
   }
 }
 
-
 var lines = 0
 var done = false
 Piece.prototype.lock = function() {
@@ -151,7 +148,6 @@ Piece.prototype.lock = function() {
   }
 }
 
-
 Piece.prototype._fill = function(color) {
   var fs = ctx.fillStyle
   ctx.fillStyle = color
@@ -185,12 +181,12 @@ var pieces = [
   [Z, "red"]
 ]
 
-
 var piece = null
 
 var dropStart = Date.now()
 var downI = {}
 document.body.addEventListener("keydown", function (e) {
+  e.preventDefault()
   if (downI[e.keyCode] !== null) {
     clearInterval(downI[e.keyCode])
   }
@@ -199,6 +195,7 @@ document.body.addEventListener("keydown", function (e) {
 }, false)
 
 document.body.addEventListener("keyup", function (e) {
+  e.preventDefault()
   if (downI[e.keyCode] !== null) {
     clearInterval(downI[e.keyCode])
   }
@@ -226,7 +223,6 @@ function key(k) {
   }
 }
 
-
 function drawBoard() {
   var fs = ctx.fillStyle
   for (var y = 0; y < height; y++) {
@@ -237,7 +233,6 @@ function drawBoard() {
   }
   ctx.fillStyle = fs
 }
-
 
 function main() {
   var now = Date.now()
