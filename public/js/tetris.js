@@ -182,46 +182,34 @@ var pieces = [
 ]
 
 var piece = null
-
 var dropStart = Date.now()
-var downI = {}
-document.body.addEventListener("keydown", function (e) {
-  e.preventDefault()
-  if (downI[e.keyCode] !== null) {
-    clearInterval(downI[e.keyCode])
-  }
-  key(e.keyCode)
-  downI[e.keyCode] = setInterval(key.bind(this, e.keyCode), 200)
-}, false)
+$(document).ready(function(){
+  $(document).keydown(function(){
+    event.preventDefault()
 
-document.body.addEventListener("keyup", function (e) {
-  e.preventDefault()
-  if (downI[e.keyCode] !== null) {
-    clearInterval(downI[e.keyCode])
-  }
-  downI[e.keyCode] = null
-}, false)
-
-function key(k) {
-  if (done) {
-    return
-  }
-  if (k == 38) { // up
-    piece.rotate()
-    dropStart = Date.now()
-  }
-  if (k == 40) { // down
-    piece.down()
-  }
-  if (k == 37) { // left
-    piece.moveLeft()
-    dropStart = Date.now()
-  }
-  if (k == 39) { // right
-    piece.moveRight()
-    dropStart = Date.now()
-  }
-}
+    if(done){
+      return
+    }
+    if(event.keyCode == 38){
+      piece.rotate()
+      dropStart = Date.now()
+    }
+    if(event.keyCode == 40){
+      piece.down()
+    }
+    if(event.keyCode == 37){
+      piece.moveLeft()
+      dropStart = Date.now()
+    }
+    if(event.keyCode == 39){
+      piece.moveRight()
+      dropStart = Date.now()
+    }
+  })
+  $('.newGame').click(function(){
+    location.reload(true)
+  })
+})
 
 function drawBoard() {
   var fs = ctx.fillStyle
@@ -244,10 +232,6 @@ function main() {
   if (!done) {
     requestAnimationFrame(main)
   }
-}
-
-function newGame() {
-  location.reload()
 }
 
 piece = newPiece()
