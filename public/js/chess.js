@@ -1,4 +1,3 @@
-/* Downloaded from http://www.codeseek.co/ */
 var board,
   game = new Chess(),
   statusEl = $('#status'),
@@ -71,6 +70,35 @@ var updateStatus = function() {
   pgnEl.html(game.pgn());
 };
 
+var onMouseoverSquare = function(square, piece) {
+    var moves = game.moves({
+        square: square,
+        verbose: true
+    });
+
+    if (moves.length === 0) return;
+
+    outlineSquare(square);
+
+    for (var i = 0; i < moves.length; i++) {
+        outlineSquare(moves[i].to);
+    }
+};
+
+var onMouseoutSquare = function(square, piece) {
+    removeOutlineSquares();
+};
+
+var removeOutlineSquares = function() {
+    $('#board .square-55d63').css('box-shadow', '');
+};
+
+var outlineSquare = function(square) {
+    var squareEl = $('#board .square-' + square);
+    var boxShadow = 'inset 0 0 3px 3px goldenrod';
+    squareEl.css('box-shadow', boxShadow);
+};
+
 var cfg = {
   snapbackSpeed: 550,
   appearSpeed: 1500,
@@ -78,7 +106,9 @@ var cfg = {
   position: 'start',
   onDragStart: onDragStart,
   onDrop: onDrop,
-   pieceTheme: 'http://www.willangles.com/projects/chessboard/img/chesspieces/wikipedia/{piece}.png',
+  pieceTheme: 'img/{piece}.png',
+  onMouseoutSquare: onMouseoutSquare,
+  onMouseoverSquare: onMouseoverSquare,
   onSnapEnd: onSnapEnd
 };
 
